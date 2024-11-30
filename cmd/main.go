@@ -7,7 +7,7 @@ import (
 	"github.com/argoproj/argo-cd/v2/cmd/util"
 
 	"github.com/spf13/cobra"
-
+    "fmt"
 	appcontroller "github.com/argoproj/argo-cd/v2/cmd/argocd-application-controller/commands"
 	applicationset "github.com/argoproj/argo-cd/v2/cmd/argocd-applicationset-controller/commands"
 	cmpserver "github.com/argoproj/argo-cd/v2/cmd/argocd-cmp-server/commands"
@@ -25,13 +25,12 @@ const (
 )
 
 func main() {
-	var command *cobra.Command
+	var command *cobra.Command   // Read what is cobra
 
 	binaryName := filepath.Base(os.Args[0])
 	if val := os.Getenv(binaryNameEnv); val != "" {
 		binaryName = val
 	}
-
 	isCLI := false
 	switch binaryName {
 	case "argocd", "argocd-linux-amd64", "argocd-darwin-amd64", "argocd-windows-amd64.exe":
