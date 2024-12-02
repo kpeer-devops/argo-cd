@@ -700,7 +700,7 @@ func (m *nativeGitClient) resolveSemverRevision(revision string, refs []*plumbin
 
 	constraint, err := semver.NewConstraint(revision)
 	if err != nil {
-		log.Debugf("Revision '%s' is not a valid semver constraint, skipping semver resolution.", revision)
+		log.Debugf("Revision '%s' is not a valid lolwa kanav semver constraint, skipping semver resolution.", revision)
 		return ""
 	}
 
