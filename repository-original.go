@@ -127,8 +127,8 @@ func NewService(metricsServer *metrics.MetricsServer, cache *cache.Cache, initCo
 	repoLock := NewRepositoryLock()
 	gitRandomizedPaths := io.NewRandomizedTempPaths(rootDir)
 	helmRandomizedPaths := io.NewRandomizedTempPaths(rootDir)
-	fmt.Println("===== I AM IN NEW SERVCE BLOCK ======")
-	service := &Service{
+	fmt.Println("===== I AM IN NEW SERVCE BLOCK")
+	return &Service{
 		parallelismLimitSemaphore: parallelismLimitSemaphore,
 		repoLock:                  repoLock,
 		cache:                     cache,
@@ -146,22 +146,9 @@ func NewService(metricsServer *metrics.MetricsServer, cache *cache.Cache, initCo
 		gitRepoInitializer: directoryPermissionInitializer,
 		rootDir:            rootDir,
 	}
-	fmt.Printf("Service Details:\nGit Credentials Store: %+v\nRoot Directory: %s\nGit Repo Paths: %+v\nChart Paths: %+v\nRepo Lock: %+v\nCache: %+v\nParallelism Limit Semaphore: %+v\nMetrics Server: %+v\nResource Tracking: %+v\nInit Constants: %+v\n",
-		service.gitCredsStore,
-		service.rootDir,
-		service.gitRepoPaths,
-		service.chartPaths,
-		service.repoLock,
-		service.cache,
-		service.parallelismLimitSemaphore,
-		service.metricsServer,
-		service.resourceTracking,
-		service.initConstants)
-	return service
 }
 
 func (s *Service) Init() error {
-	fmt.Println("===== I AM IN INIT SERVCE BLOCK ======")
 	_, err := os.Stat(s.rootDir)
 	if os.IsNotExist(err) {
 		return os.MkdirAll(s.rootDir, 0o300)
@@ -198,8 +185,6 @@ func (s *Service) Init() error {
 
 // ListRefs List a subset of the refs (currently, branches and tags) of a git repo
 func (s *Service) ListRefs(ctx context.Context, q *apiclient.ListRefsRequest) (*apiclient.Refs, error) {
-
-	fmt.Println("===== I AM IN LIST REF BLOCK ======")
 	gitClient, err := s.newClient(q.Repo)
 	if err != nil {
 		return nil, fmt.Errorf("error creating git client: %w", err)
