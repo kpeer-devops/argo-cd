@@ -35,7 +35,7 @@ func main() {
 	// $COMMAND value is passed to the variable binaryName which is argocd
 	binaryName := filepath.Base(os.Args[0])
 	fmt.Println(binaryName)
-	fmt.Println("kanavpeer")
+	fmt.Println("======= in cmd/main.go =========")
 	// binaryNameEnv = ARGOCD_BINARY_NAME = for Repo server the value comes from its Procfile in ARGOCD_BINARY_NAME=argocd-repo-server
 	if val := os.Getenv(binaryNameEnv); val != "" {
 		binaryName = val
