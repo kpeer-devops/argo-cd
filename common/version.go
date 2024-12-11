@@ -44,6 +44,7 @@ func (v Version) LogStartupInfo(componentName string, fields map[string]any) {
 	fields["version"] = v.Version
 	fields["commit"] = v.GitCommit
 	fields["built"] = v.BuildDate
+	fmt.Println("=============== coomon/version.go ===============")
 	log.WithFields(log.Fields(fields)).Infof("%s is starting", componentName)
 }
 

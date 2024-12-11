@@ -70,6 +70,7 @@ func (d NoopCredsStore) Environ(id string) []string {
 }
 
 type CredsStore interface {
+	// Log the addition of credentials
 	Add(username string, password string) string
 	Remove(id string)
 	// Environ returns the environment variables that should be set to use the credentials for the given credential ID.

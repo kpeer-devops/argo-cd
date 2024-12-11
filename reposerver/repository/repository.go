@@ -121,10 +121,14 @@ type RepoServerInitConstants struct {
 // NewService returns a new instance of the Manifest service
 func NewService(metricsServer *metrics.MetricsServer, cache *cache.Cache, initConstants RepoServerInitConstants, resourceTracking argo.ResourceTracking, gitCredsStore git.CredsStore, rootDir string) *Service {
 	var parallelismLimitSemaphore *semaphore.Weighted
+	fmt.Println(parallelismLimitSemaphore)
+	fmt.Println(initConstants.ParallelismLimit)
 	if initConstants.ParallelismLimit > 0 {
+		fmt.Println("===== I AM IN PARALLELISM LIMIT BLOCK ======")
 		parallelismLimitSemaphore = semaphore.NewWeighted(initConstants.ParallelismLimit)
 	}
 	repoLock := NewRepositoryLock()
+	fmt.Println(repoLock)
 	gitRandomizedPaths := io.NewRandomizedTempPaths(rootDir)
 	helmRandomizedPaths := io.NewRandomizedTempPaths(rootDir)
 	fmt.Println("===== I AM IN NEW SERVCE BLOCK ======")
@@ -146,7 +150,7 @@ func NewService(metricsServer *metrics.MetricsServer, cache *cache.Cache, initCo
 		gitRepoInitializer: directoryPermissionInitializer,
 		rootDir:            rootDir,
 	}
-	fmt.Printf("Service Details:\nGit Credentials Store: %+v\nRoot Directory: %s\nGit Repo Paths: %+v\nChart Paths: %+v\nRepo Lock: %+v\nCache: %+v\nParallelism Limit Semaphore: %+v\nMetrics Server: %+v\nResource Tracking: %+v\nInit Constants: %+v\n",
+	fmt.Printf("Service Details=\n\nGit Credentials Store=%+v\n\nRoot Directory=%s\n\nGit Repo Paths=%+v\n\nChart Paths=%+v\n\nRepo Lock=%+v\n\nCache=%+v\n\nParallelism Limit Semaphore=%+v\n\nMetrics Server=%+v\n\nResource Tracking=%+v\n\nInit Constants=%+v\n\n",
 		service.gitCredsStore,
 		service.rootDir,
 		service.gitRepoPaths,
@@ -2325,6 +2329,7 @@ func (s *Service) GetRevisionMetadata(ctx context.Context, q *apiclient.RepoServ
 		if !errors.Is(err, cache.ErrCacheMiss) {
 			log.Warnf("revision metadata cache error %s/%s: %v", q.Repo.Repo, q.Revision, err)
 		} else {
+			fmt.Println("================revision metadata cache miss======================")
 			log.Infof("revision metadata cache miss: %s/%s", q.Repo.Repo, q.Revision)
 		}
 	}

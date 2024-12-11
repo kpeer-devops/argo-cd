@@ -324,6 +324,7 @@ func (m *nativeGitClient) Init() error {
 	if !errors.Is(err, git.ErrRepositoryNotExists) {
 		return err
 	}
+	log.Infof("==========================Initalzing repo block=============================")
 	log.Infof("Initializing %s to %s", m.repoURL, m.root)
 	err = os.RemoveAll(m.root)
 	if err != nil {

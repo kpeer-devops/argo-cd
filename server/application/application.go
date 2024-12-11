@@ -1533,6 +1533,7 @@ func (s *Server) RevisionMetadata(ctx context.Context, q *application.RevisionMe
 		return nil, fmt.Errorf("error creating repo server client: %w", err)
 	}
 	defer ioutil.Close(conn)
+	fmt.Println("==================In revision metadata code application.go ===================")
 	return repoClient.GetRevisionMetadata(ctx, &apiclient.RepoServerRevisionMetadataRequest{
 		Repo:           repo,
 		Revision:       q.GetRevision(),
